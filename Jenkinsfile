@@ -56,11 +56,11 @@ pipeline {
     }
 
     stage('Quality Gate') {
-        steps {
-            timeout(time: 10, unit: 'MINUTES') {
-                waitForQualityGate abortPipeline: true
-            }
+      steps {
+        timeout(time: 10, unit: 'MINUTES') {
+          waitForQualityGate abortPipeline: true
         }
+      }
     }
 
     stage('OWASP Dependency-Check') {
@@ -129,8 +129,22 @@ pipeline {
         }
       }
     }
-  }
 
+    stage('Deploy to EKS') {
+      steps {
+        sh '''
+          aws eks update-kubeconfig --region us-east-1 --name netflix-eks
+          kubectl get nodes
+          kubectl apply -f k8s/deployment.yaml
+          kubectl apply -f k8s/service.yaml
+          
+          kubectl get pods
+          kubectl get svc
+        '''
+      }
+    }
+  }
+  
   post {
     always {
       sh '''
