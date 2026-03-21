@@ -16,17 +16,19 @@ RUN yarn build
 
 FROM nginx:stable-alpine
 
-# Supprimer la config par défaut
-RUN rm -f /etc/nginx/conf.d/default.conf
+# Remplacer complètement la conf principale nginx
+COPY nginx.conf /etc/nginx/nginx.conf
 
-# Copier notre config nginx custom
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-
-# Copier le build Vite
+# Copier le build frontend
 COPY --from=builder /app/dist /usr/share/nginx/html
 
-# Préparer les répertoires utilisés par nginx
-RUN mkdir -p /var/cache/nginx /tmp/nginx \
+# Préparer les répertoires nécessaires
+RUN mkdir -p /var/cache/nginx \
+    /tmp/nginx/client_temp \
+    /tmp/nginx/proxy_temp \
+    /tmp/nginx/fastcgi_temp \
+    /tmp/nginx/uwsgi_temp \
+    /tmp/nginx/scgi_temp \
     && chown -R nginx:nginx /var/cache/nginx /tmp/nginx /usr/share/nginx/html
 
 EXPOSE 8080
