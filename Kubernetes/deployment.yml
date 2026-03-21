@@ -20,7 +20,7 @@ spec:
           type: RuntimeDefault
       containers:
         - name: netflix-app
-          image: omari87/netflix:1
+          image: omari87/netflix:placeholder
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
