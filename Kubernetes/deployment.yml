@@ -23,16 +23,21 @@ spec:
           image: omari87/netflix:1
           imagePullPolicy: Always
           ports:
-            - containerPort: 80
+            - containerPort: 8080
           securityContext:
+            runAsNonRoot: true
+            runAsUser: 101
+            runAsGroup: 101
             allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: false
             capabilities:
               drop:
                 - ALL
-              add:
-                - NET_BIND_SERVICE
-            runAsUser: 0
-            readOnlyRootFilesystem: false
+          volumeMounts:
+            - name: nginx-cache
+              mountPath: /var/cache/nginx
+            - name: nginx-tmp
+              mountPath: /tmp/nginx
           resources:
             requests:
               cpu: "100m"
@@ -42,17 +47,22 @@ spec:
               memory: "512Mi"
           livenessProbe:
             httpGet:
-              path: /
-              port: 80
-            initialDelaySeconds: 30
+              path: /health
+              port: 8080
+            initialDelaySeconds: 20
             periodSeconds: 15
             timeoutSeconds: 5
             failureThreshold: 3
           readinessProbe:
             httpGet:
-              path: /
-              port: 80
-            initialDelaySeconds: 15
+              path: /health
+              port: 8080
+            initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 3
             failureThreshold: 3
+      volumes:
+        - name: nginx-cache
+          emptyDir: {}
+        - name: nginx-tmp
+          emptyDir: {}
