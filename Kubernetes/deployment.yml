@@ -18,6 +18,7 @@ spec:
       securityContext:
         seccompProfile:
           type: RuntimeDefault
+        fsGroup: 101
       containers:
         - name: netflix-app
           image: omari87/netflix:placeholder
