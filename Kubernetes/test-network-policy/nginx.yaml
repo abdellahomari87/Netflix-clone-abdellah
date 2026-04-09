@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: nginx
-  namespace: np-test
+  namespace: netflix
   labels:
     app: nginx
 spec:
