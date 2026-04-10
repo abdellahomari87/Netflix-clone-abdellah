@@ -1,12 +1,12 @@
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: allow-netflix-ingress-and-dns
+  name: allow-client-allowed-dns-and-nginx
   namespace: netflix
 spec:
   podSelector:
     matchLabels:
-      app: netflix-app
+      access: allowed
   policyTypes:
     - Ingress
     - Egress
