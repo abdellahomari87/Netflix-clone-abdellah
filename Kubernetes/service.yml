@@ -4,7 +4,7 @@ metadata:
   name: netflix-service
   namespace: netflix
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   selector:
     app: netflix-app
   ports:
