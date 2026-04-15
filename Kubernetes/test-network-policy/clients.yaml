@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: client-allowed
-  namespace: netflix
+  namespace: netflix-test
   labels:
     access: allowed
 spec:
@@ -15,7 +15,7 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: client-blocked
-  namespace: netflix
+  namespace: netflix-test
   labels:
     access: blocked
 spec:
