@@ -9,3 +9,9 @@ The original project was later modernized using a DevSecOps-oriented approach in
 The modernization work is available in a dedicated branch:
 
 modernisation-project
+
+# 🔗 Related Repository
+
+Infrastructure & DevSecOps repository:
+
+👉 https://github.com/abdellahomari87/aws-devsecops-eks-netflix-clone
